@@ -1,18 +1,31 @@
 const mongoose = require("mongoose");
 
-const posterSchema = new mongoose.Schema({
-  title: {
+const imageSchema = new mongoose.Schema({
+  filename: {
     type: String,
-    required: true,
+    default: "",
   },
-  description: {
+  originalname: {
     type: String,
-    required: true,
+    default: "",
   },
-  image: {
+  mimetype: {
     type: String,
-    required: true,
+    default: "",
   },
 });
 
-module.exports = mongoose.model("Poster", posterSchema);
+const postSchema = new mongoose.Schema(
+  {
+    title: { type: String, required: true },
+    description: { type: String },
+    image: { type: imageSchema }, // Adjusted to use imageSchema directly
+    createdBy: { type: String },
+    updatedBy: { type: String },
+  },
+  {
+    timestamps: true,
+  }
+);
+
+module.exports = mongoose.model("Poster", postSchema);

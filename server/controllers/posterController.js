@@ -1,18 +1,20 @@
 const Poster = require("../models/Poster");
 const multer = require("multer");
 const fs = require("fs");
+const path = require("path");
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, "uploads/");
   },
   filename: function (req, file, cb) {
-    cb(null, Date.now() + "-" + file.originalname);
+    const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
+    cb(null, uniqueSuffix + path.extname(file.originalname));
   },
 });
 
 const fileFilter = (req, file, cb) => {
-  const allowedFileTypes = ["image/jpeg", "image/png"];
+  const allowedFileTypes = ["image/jpeg", "image/png", "image/jpg"];
   if (allowedFileTypes.includes(file.mimetype)) {
     cb(null, true);
   } else {
@@ -32,12 +34,16 @@ const createPoster = async (req, res) => {
       return res.status(400).json({ message: "Please upload an image." });
     }
 
-    const imageUrl = req.file.path;
+    const { filename, originalname, mimetype } = req.file;
 
     const newPoster = new Poster({
       title,
       description,
-      image: imageUrl,
+      image: {
+        filename,
+        originalname,
+        mimetype,
+      },
     });
 
     await newPoster.save();
@@ -69,9 +75,18 @@ const deletePoster = async (req, res) => {
       return res.status(404).json({ message: "Poster not found" });
     }
 
-    const imagePath = deletedPoster.image;
+    const imagePath = path.join(
+      __dirname,
+      "../uploads/",
+      deletedPoster.image.filename
+    );
+
+    // Check if the file exists before attempting to delete
     if (fs.existsSync(imagePath)) {
       fs.unlinkSync(imagePath);
+      console.log(`Deleted image file: ${imagePath}`);
+    } else {
+      console.log(`Image file not found: ${imagePath}`);
     }
 
     res.json({ message: "Poster and image deleted successfully" });
