@@ -1,4 +1,4 @@
-const Poster = require("../models/Poster");
+const Poster = require("../models/poster");
 const multer = require("multer");
 const fs = require("fs");
 const path = require("path");
