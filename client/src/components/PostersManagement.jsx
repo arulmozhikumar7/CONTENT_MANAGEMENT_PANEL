@@ -17,6 +17,7 @@ import { getPosters, addPoster, deletePoster } from "../hooks/usePosters";
 import "./PosterManagement.css";
 
 const PosterManagement = () => {
+  const appUrl = import.meta.env.VITE_API_URL;
   const [posters, setPosters] = useState([]);
   const [show, setShow] = useState(false);
   const [title, setTitle] = useState("");
@@ -52,7 +53,7 @@ const PosterManagement = () => {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
-  const filteredPosters = posters?.filter((poster) =>
+  const filteredPosters = posters.filter((poster) =>
     poster.title.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
@@ -133,7 +134,7 @@ const PosterManagement = () => {
               <Card className="h-100">
                 <Card.Img
                   variant="top"
-                  src={`http://localhost:5000/uploads/${poster.image.filename}`}
+                  src={appUrl + `uploads/${poster.image.filename}`}
                   className="card-img-top"
                 />
                 <Card.Body>
