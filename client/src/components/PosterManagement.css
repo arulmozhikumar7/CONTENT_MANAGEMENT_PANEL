@@ -1,0 +1,45 @@
+/* PosterManagement.css */
+.container {
+  margin-top: 20px;
+}
+
+.btn-add-poster {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 50px;
+  height: 50px;
+  font-size: 24px;
+  border-radius: 50%;
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+}
+
+.card {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+}
+
+.card-img-top {
+  height: 200px;
+  object-fit: cover;
+}
+
+.card-body {
+  text-align: center;
+}
+
+.card-title {
+  font-size: 1.5em;
+  margin-bottom: 0.5em;
+}
+
+.card-text {
+  font-size: 1em;
+  margin-bottom: 1em;
+}
