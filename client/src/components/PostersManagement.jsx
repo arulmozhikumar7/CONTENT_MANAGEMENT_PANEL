@@ -134,7 +134,7 @@ const PosterManagement = () => {
               <Card className="h-100">
                 <Card.Img
                   variant="top"
-                  src={appUrl + `uploads/${poster.image.filename}`}
+                  src={appUrl + `/uploads/${poster.image.filename}`}
                   className="card-img-top"
                 />
                 <Card.Body>
